@@ -41,3 +41,37 @@ export interface FulfillmentGroup {
   trackingUrl?: string;
   lines: FulfillmentLine[];
 }
+
+/**
+ * Why a stock movement happened. Mirrors Vendure's `StockMovementType`.
+ */
+export type StockMovementType =
+  | "ADJUSTMENT"
+  | "ALLOCATION"
+  | "CANCELLATION"
+  | "RELEASE"
+  | "SALE"
+  | "RETURN";
+
+/**
+ * One change in available stock for a single SKU/variant. Negative
+ * `quantity` means stock decreased (e.g. SALE / ALLOCATION).
+ */
+export interface StockMovement {
+  id: Id;
+  sku: string;
+  variantId?: Id;
+  productId?: Id;
+  type: StockMovementType;
+  /** Signed delta. Negative for outflows, positive for inflows. */
+  quantity: number;
+  /** Order this movement is tied to, if any. */
+  orderId?: Id;
+  orderCode?: string;
+  /** Stock location id, if the seller has multiple warehouses. */
+  locationId?: Id;
+  /** Free-form note from the operator who made the adjustment. */
+  notes?: string;
+  /** When the movement occurred (ISO 8601). */
+  occurredAt?: string;
+}

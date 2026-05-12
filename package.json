@@ -1,6 +1,6 @@
 {
   "name": "@duabalabs/sellub-types",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Shared TypeScript types and DTOs for the Sellub commerce platform. Consumed by sellub-client, sellub-react, sellub-react-native, sellub-webhooks and every internal sellub-server plugin.",
   "license": "MIT",
   "repository": {

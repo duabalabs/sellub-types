@@ -2,6 +2,21 @@
 
 All notable changes to `@duabalabs/sellub-types` are documented here.
 
+## 0.3.0 — 2026-05-12 — Inventory events
+
+### Added
+
+- `StockMovement`, `StockMovementType` — typed shape for inventory deltas
+  (ADJUSTMENT, ALLOCATION, CANCELLATION, RELEASE, SALE, RETURN).
+- `WebhookEvent` extended with four inventory event variants:
+  - `inventory.updated` — `{ item: InventoryItem }`
+  - `inventory.low_stock` — `{ item: InventoryItem, threshold: number }`
+  - `inventory.out_of_stock` — `{ item: InventoryItem }`
+  - `stock.movement` — `{ movement: StockMovement, item?: InventoryItem }`
+
+No breaking changes — these are additive union members. Existing
+discriminator switches keep working; new ones can use `isWebhookEvent(e, "inventory.updated")` etc.
+
 ## 0.2.0 — 2026-05-12
 
 ### Added

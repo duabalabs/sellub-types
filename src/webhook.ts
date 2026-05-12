@@ -2,7 +2,7 @@ import type { Id, Iso8601 } from "./primitives";
 import type { OrderRef, OrderStatus } from "./customer";
 import type { PaymentRef } from "./payment";
 import type { Subscription } from "./subscription";
-import type { FulfillmentGroup } from "./inventory";
+import type { FulfillmentGroup, InventoryItem, StockMovement } from "./inventory";
 
 /** Discriminator keys for the typed webhook union. */
 export type WebhookEventType =
@@ -15,7 +15,11 @@ export type WebhookEventType =
   | "subscription.cancelled"
   | "subscription.renewed"
   | "fulfillment.shipped"
-  | "fulfillment.delivered";
+  | "fulfillment.delivered"
+  | "inventory.updated"
+  | "inventory.low_stock"
+  | "inventory.out_of_stock"
+  | "stock.movement";
 
 interface WebhookEventBase<TType extends WebhookEventType, TData> {
   /** Server-assigned event id; use to deduplicate redeliveries. */
@@ -78,6 +82,26 @@ export type FulfillmentDeliveredEvent = WebhookEventBase<
   { order: OrderRef; fulfillment: FulfillmentGroup }
 >;
 
+export type InventoryUpdatedEvent = WebhookEventBase<
+  "inventory.updated",
+  { item: InventoryItem }
+>;
+
+export type InventoryLowStockEvent = WebhookEventBase<
+  "inventory.low_stock",
+  { item: InventoryItem; threshold: number }
+>;
+
+export type InventoryOutOfStockEvent = WebhookEventBase<
+  "inventory.out_of_stock",
+  { item: InventoryItem }
+>;
+
+export type StockMovementEvent = WebhookEventBase<
+  "stock.movement",
+  { movement: StockMovement; item?: InventoryItem }
+>;
+
 /**
  * Discriminated union of every Sellub webhook event. Switch on `event.type`
  * to narrow `event.data`.
@@ -92,7 +116,11 @@ export type WebhookEvent =
   | SubscriptionCancelledEvent
   | SubscriptionRenewedEvent
   | FulfillmentShippedEvent
-  | FulfillmentDeliveredEvent;
+  | FulfillmentDeliveredEvent
+  | InventoryUpdatedEvent
+  | InventoryLowStockEvent
+  | InventoryOutOfStockEvent
+  | StockMovementEvent;
 
 /** Type predicate for a specific event type. */
 export function isWebhookEvent<T extends WebhookEventType>(
