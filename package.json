@@ -1,7 +1,7 @@
 {
   "name": "@duabalabs/sellub-types",
-  "version": "0.1.0",
-  "description": "Shared TypeScript types and DTOs for the Sellub commerce platform. Consumed by sellub-client, sellub-react, sellub-react-native, and every sellub-vendure-* plugin.",
+  "version": "0.2.0",
+  "description": "Shared TypeScript types and DTOs for the Sellub commerce platform. Consumed by sellub-client, sellub-react, sellub-react-native, sellub-webhooks and every internal sellub-server plugin.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,22 +15,66 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
+    },
+    "./primitives": {
+      "types": "./dist/primitives.d.ts",
+      "import": "./dist/primitives.js",
+      "require": "./dist/primitives.js"
+    },
+    "./money": {
+      "types": "./dist/money.d.ts",
+      "import": "./dist/money.js",
+      "require": "./dist/money.js"
+    },
+    "./customer": {
+      "types": "./dist/customer.d.ts",
+      "import": "./dist/customer.js",
+      "require": "./dist/customer.js"
+    },
+    "./payment": {
+      "types": "./dist/payment.d.ts",
+      "import": "./dist/payment.js",
+      "require": "./dist/payment.js"
+    },
+    "./subscription": {
+      "types": "./dist/subscription.d.ts",
+      "import": "./dist/subscription.js",
+      "require": "./dist/subscription.js"
+    },
+    "./inventory": {
+      "types": "./dist/inventory.d.ts",
+      "import": "./dist/inventory.js",
+      "require": "./dist/inventory.js"
+    },
+    "./webhook": {
+      "types": "./dist/webhook.d.ts",
+      "import": "./dist/webhook.js",
+      "require": "./dist/webhook.js"
+    },
+    "./api": {
+      "types": "./dist/api.d.ts",
+      "import": "./dist/api.js",
+      "require": "./dist/api.js"
     }
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "prepublishOnly": "npm run build"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
   },
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.1"
   }
 }

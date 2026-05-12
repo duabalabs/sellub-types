@@ -1,5 +1,25 @@
 // @duabalabs/sellub-types
 // Shared types for the Sellub commerce platform.
+//
+// All exports are re-exported from sub-modules; importing from the package
+// root works exactly as it did in 0.1.x:
+//
+//   import type { Money, OrderRef, Subscription } from "@duabalabs/sellub-types";
+//
+// You can also import from a sub-path for tree-shaking-friendly bundlers:
+//
+//   import type { WebhookEvent } from "@duabalabs/sellub-types/webhook";
+
+export * from "./primitives";
+export * from "./money";
+export * from "./customer";
+export * from "./payment";
+export * from "./subscription";
+export * from "./inventory";
+export * from "./webhook";
+export * from "./api";
+// @duabalabs/sellub-types
+// Shared types for the Sellub commerce platform.
 
 export type Cents = number;
 export type Iso8601 = string;
